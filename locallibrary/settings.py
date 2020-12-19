@@ -30,7 +30,7 @@ SECRET_KEY = os.environ.get(
 # DEBUG = True
 DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
 
-ALLOWED_HOSTS = ['limitless-mountain-24991.herokuapp.com', ]
+ALLOWED_HOSTS = ['limitless-mountain-24991.herokuapp.com', '127.0.0.1']
 
 
 # Application definition
