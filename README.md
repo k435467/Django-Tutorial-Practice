@@ -1,6 +1,6 @@
 # My notes
 
-Practice the Django tutorial on MDN web site on Windows. [link to the tutorial](https://developer.mozilla.org/en-US/docs/Learn/Server-side/Django)
+Practice the Django tutorial that is on the MDN website on Windows. [link to the tutorial](https://developer.mozilla.org/en-US/docs/Learn/Server-side/Django)
 
 - [My notes](#my-notes)
   - [Django introduction](#django-introduction)
