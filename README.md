@@ -2,6 +2,8 @@
 
 Practice the Django tutorial that is on the MDN website on Windows. [link to the tutorial](https://developer.mozilla.org/en-US/docs/Learn/Server-side/Django)
 
+Learn Django from scratch. Including setting up dev environment, defining models, Django admin site, auth and permissions, testing, security, etc. Build a local library website and deploy it on Heroku.
+
 - [My notes](#my-notes)
   - [Django introduction](#django-introduction)
   - [Setting up a Django development environment](#setting-up-a-django-development-environment)
@@ -40,10 +42,10 @@ Practice the Django tutorial that is on the MDN website on Windows. [link to the
   - create a folder
   - create the new project
 
-      ```shell
-      django-admin startproject locallibrary
-      cd locallibrary
-      ```
+    ```shell
+    django-admin startproject locallibrary
+    cd locallibrary
+    ```
 
 - Creating the catalog application
 
@@ -52,7 +54,8 @@ Practice the Django tutorial that is on the MDN website on Windows. [link to the
   ```
 
 - Registering the catalog application
-  - ```settings.py```
+
+  - `settings.py`
 
     ```python
     INSTALLED_APPS = [
@@ -62,13 +65,14 @@ Practice the Django tutorial that is on the MDN website on Windows. [link to the
         'django.contrib.sessions',
         'django.contrib.messages',
         'django.contrib.staticfiles',
-        # Add our new application 
+        # Add our new application
         'catalog.apps.CatalogConfig', #This object was created for us in /catalog/apps.py
     ]
     ```
 
 - Specifying the database
-  - ```settings.py```
+
+  - `settings.py`
 
     ```python
     DATABASES = {
@@ -81,7 +85,8 @@ Practice the Django tutorial that is on the MDN website on Windows. [link to the
     ```
 
 - Hooking up the URL mapper
-  - ```locallibrary/urls.py```
+
+  - `locallibrary/urls.py`
 
     ```python
     from django.contrib import admin
@@ -98,7 +103,7 @@ Practice the Django tutorial that is on the MDN website on Windows. [link to the
     ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) # Use static() to add url mapping to serve static files during development (only)
     ```
 
-  - ```catalog/urls.py```
+  - `catalog/urls.py`
 
     ```python
     from django.urls import path
@@ -132,7 +137,7 @@ number_wild_books = wild_books.count()
 
 ## Django Tutorial Part4: Django admin site
 
-- Registering models: ```catalog/admin.py```
+- Registering models: `catalog/admin.py`
 
   ```python
   from .models import Author
@@ -145,7 +150,7 @@ number_wild_books = wild_books.count()
   py manage.py createsuperuser
   ```
 
-- Register a ModelAdmin class: ```catalog/admin.py```
+- Register a ModelAdmin class: `catalog/admin.py`
 
   ```python
   @admin.register(Author)
@@ -176,11 +181,11 @@ number_wild_books = wild_books.count()
 
   ```html
   {% load static %}
-  <link rel="stylesheet" href="{% static 'css/styles.css' %}">
-  <img src="{% static 'catalog/images/local_library_model_uml.png' %}">
+  <link rel="stylesheet" href="{% static 'css/styles.css' %}" />
+  <img src="{% static 'catalog/images/local_library_model_uml.png' %}" />
   ```
 
-- Configuring where to find the templates: ```settings.py```
+- Configuring where to find the templates: `settings.py`
 
   ```python
   TEMPLATES = [
@@ -198,13 +203,13 @@ number_wild_books = wild_books.count()
 
 ## Django Tutorial Part6: Generic list and detail views
 
-- Specify template, pass additional context variables. ```views.py```
+- Specify template, pass additional context variables. `views.py`
 
   ```python
   class BookListView(generic.ListView):
       # ...
       template_name = 'books/my_arbitrary_template_name_list.html'  # Specify your own template name/location
-      
+
       # pass additional context variables
       def get_context_data(self, **kwargs):
           context = super(BookListView, self).get_context_data(**kwargs)
@@ -222,7 +227,7 @@ number_wild_books = wild_books.count()
 
 ## Django Tutorial Part7: Sessions framework
 
-- Enabling sessions: enabled automatically. ```settings.py```
+- Enabling sessions: enabled automatically. `settings.py`
 
   ```python
   INSTALLED_APPS = [
@@ -250,7 +255,7 @@ number_wild_books = wild_books.count()
 
 ## Django Tutorial Part8: User authentication and permissions
 
-- Enabling authentication: enabled automatically. ```settings.py```
+- Enabling authentication: enabled automatically. `settings.py`
 
   ```python
   INSTALLED_APPS = [
@@ -267,7 +272,7 @@ number_wild_books = wild_books.count()
       ...
   ```
 
-- Project URLs: ```locallibrary/urls.py```
+- Project URLs: `locallibrary/urls.py`
 
   ```python
   urlpatterns += [
@@ -284,7 +289,7 @@ number_wild_books = wild_books.count()
   # accounts/ reset/done/ [name='password_reset_complete']
   ```
 
-- Redirect: ```settings.py```
+- Redirect: `settings.py`
 
   ```python
   # Redirect to home URL after login (Default redirects to /accounts/profile/)
@@ -306,11 +311,12 @@ number_wild_books = wild_books.count()
   from django.contrib.auth.mixins import LoginRequiredMixin
 
   class MyView(LoginRequiredMixin, View):
-    login_url = '/login/' # optional 
+    login_url = '/login/' # optional
     redirect_field_name = 'redirect_to' # optional
   ```
 
 - Permissions
+
   - Models
 
     ```python
@@ -319,19 +325,17 @@ number_wild_books = wild_books.count()
         class Meta:
             ...
             # tuple containing the name and display value
-            permissions = (("can_mark_returned", "Set book as returned"),)   
+            permissions = (("can_mark_returned", "Set book as returned"),)
     ```
 
   - Templates
 
     ```html
     {% if perms.catalog.can_mark_returned %}
-        <!-- We can mark a BookInstance as returned. -->
-        <!-- Perhaps add code to link to a "book return" view here. -->
-    {% endif %}
-
-    {% if user.is_staff %}
-        <!-- content is for staff only -->
+    <!-- We can mark a BookInstance as returned. -->
+    <!-- Perhaps add code to link to a "book return" view here. -->
+    {% endif %} {% if user.is_staff %}
+    <!-- content is for staff only -->
     {% endif %}
     ```
 
@@ -391,12 +395,7 @@ class YourTestClass(TestCase):
 
 ```html
 <!-- Django will discover  tests under the current working directory in any file named with the pattern test*.py -->
-catalog/
-  /tests/
-    __init__.py
-    test_models.py
-    test_forms.py
-    test_views.py
+catalog/ /tests/ __init__.py test_models.py test_forms.py test_views.py
 ```
 
 ```shell
@@ -407,7 +406,8 @@ python3 manage.py test catalog.tests.test_models.YourTestClass.test_one_plus_one
 
 ## Django Turorial Part11: Deploying Django to production
 
-```settings.py```
+`settings.py`
+
 ```python
 DEBUG = False
 
